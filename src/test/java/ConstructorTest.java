@@ -14,24 +14,36 @@ public class ConstructorTest {
 
     private static final String BASE_URL = "https://stellarburgers.nomoreparties.site/";
     private WebDriver driver;
+    private ConstructorPage constructorPage;
 
     @Before
     public void setUp() {
         driver = createWebDriver();
+        driver.get(BASE_URL);
+        constructorPage = new ConstructorPage(driver);
+        constructorPage.waitConstructorPageLoaded();
     }
 
     @Test
-    public void checkBurgerTabs() {
-        driver.get(BASE_URL);
-
-        ConstructorPage constructorPage = new ConstructorPage(driver);
-        constructorPage.waitConstructorPageLoaded();
+    public void checkFillingsTab() {
 
         constructorPage.fillingsTabClick();
         constructorPage.waitFillingsTabLoaded();
 
+    }
+
+    @Test
+    public void checkSaucesTab() {
+
         constructorPage.saucesTabClick();
         constructorPage.waitSaucesTabLoaded();
+
+    }
+
+    @Test
+    public void checkBunsTab() {
+
+        constructorPage.scrollConstructorToFillings();
 
         constructorPage.bunsTabClick();
         constructorPage.waitBunsTabLoaded();
